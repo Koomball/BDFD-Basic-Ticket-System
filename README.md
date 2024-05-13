@@ -26,3 +26,14 @@ $addButton[no;other;Other;primary]
 $endif
 $endif
 ```
+
+## /set-category
+this slash command will be used in a channel within the category you want your tickets to appear in.
+```
+$nomention
+$if[$isAdmin[$authorID]]
+$setServerVar[ticketCategory;$parentID;$guildID]
+$title[Success]
+$endif
+```
+
