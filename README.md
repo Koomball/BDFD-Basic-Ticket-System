@@ -37,3 +37,74 @@ $title[Success]
 $endif
 ```
 
+## $onInteraction
+this is the interaction for the 3 ticket buttons and the close ticket button.
+```
+$nomention
+$defer
+$var[c;$getServerVar[ticketCategory;$guildID]]
+$if[$customID==report]
+$var[text;report-$random[100;9999999]]
+$async[c]
+$createChannel[$var[text];text;$var[c]]
+$endasync
+$await[c]
+$var[c;$findChannel[$var[text]]]
+$async[e]
+$var[e;$sendEmbedMessage[$var[c];;> User Report;;> Send details related to your report below like,
+> - User your reporting
+> - Report reason
+> - Proof of accusation;FFFFFF;;;;;;;true;true]]
+$endasync
+$await[e]
+$ephemeral
+$removeButtons
+your ticket has been created <#$var[c]>
+$useChannel[$var[c]]
+$editChannelPerms[$channelID;$authorID;+readmessages]
+$addButton[no;close;Close Ticket;danger;;;$var[e]]
+$stop
+
+$elseif[$customID==feedback]
+$var[text;feedback-$random[100;9999999]]
+$async[c]
+$createChannel[$var[text];text;$var[c]]
+$endasync
+$await[c]
+$var[c;$findChannel[$var[text]]]
+$async[e]
+$var[e;$sendEmbedMessage[$var[c];;> Server Feedback;;> - Positive, Negative or Neutral?
+> - Your feedback.;444444;;;;;;;true;true]]
+$endasync
+$await[e]
+$ephemeral
+$removeButtons
+your ticket has been created <#$var[c]>
+$useChannel[$var[c]]
+$editChannelPerms[$channelID;$authorID;+readmessages]
+$addButton[no;close;Close Ticket;danger;;;$var[e]]
+$stop
+
+$elseif[$customID==other]
+$var[text;ticket-$random[100;9999999]]
+$async[c]
+$createChannel[$var[text];text;$var[c]]
+$endasync
+$await[c]
+$var[c;$findChannel[$var[text]]]
+$async[e]
+$var[e;$sendEmbedMessage[$var[c];;> Ticket Details;;> - Send ticket details below;444444;;;;;;;true;true]]
+$endasync
+$await[e]
+$ephemeral
+$removeButtons
+your ticket has been created <#$var[c]>
+$useChannel[$var[c]]
+$editChannelPerms[$channelID;$authorID;+readmessages]
+$addButton[no;close;Close Ticket;danger;;;$var[e]]
+$stop
+$endif
+$if[$customID==close]
+$deleteChannels[$channelID]
+$endif
+```
